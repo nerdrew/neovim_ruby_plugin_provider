@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require "neovim_plugin_provider"
+require 'optparse'
+
+verbose = false
+log = nil
+
+opts = OptionParser.new
+
+opts.on("-l", "--log PATH", "log path") do |arg|
+  log = arg
+end
+
+opts.on("-v", "--verbose", "Verbose output") do
+  verbose = true
+end
+
+opts.on_tail("-h", "--help") do
+  puts opts
+  exit
+end
+
+opts.parse!(ARGV)
+
+NeovimPluginProvider::Host.new(ARGV, log: log, verbose: verbose).run
